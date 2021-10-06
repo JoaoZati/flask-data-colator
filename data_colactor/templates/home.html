@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Collecting height</h1>
+<h3>Please fill the entries to get population height statistics</h3>
+<h3>Note: height given in 'cm'</h3>
+<form action="success.html">
+    <input
+            title="Your email will be safe with us"
+            placeholder="Enter your email Address"
+            type="email"
+            name="email_name"
+            required> <br>
+    <input
+            title="Your data will be safe with us"
+            placeholder="Enter your height"
+            type="number"
+            min = "0"
+            max = "300"
+            name="height_name"
+            required> <br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
