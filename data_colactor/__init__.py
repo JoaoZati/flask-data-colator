@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from send_email import send_email
+from sqlalchemy.sql import func
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mNoWF5rUjZPyNNScRAw6sPjmZnP87rAQkuM7WAhbRM'
@@ -38,10 +39,13 @@ def success():
             flash('Email already exists', category='error')
             return redirect(url_for('home'))
 
-        send_email(email, height)
         data = Data(email, height)
         db.session.add(data)
         db.session.commit()
+        avarange_weight = db.session.query(func.avg(Data.height_db)).scalar()
+        avarange_weight = round(avarange_weight, 2)
+        count = db.session.query(Data.height_db).count()
+        send_email(email, height, avarange_weight, count)
         flash("Email successfully sent", category='success') # can pass like a render in text
 
     return render_template('success.html')

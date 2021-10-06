@@ -8,11 +8,14 @@ with open('../config.txt', 'r') as file:
     from_password = list_content[1].replace("from_password = ", '')
 
 
-def send_email(email, height):
+def send_email(email, height, avarage, count):
     to_email = email
 
     subject = 'Height data'
-    message = f'Hey there, your height is <strong>{height}</strong>'
+    message = f'''
+    Hey there, your height is <strong>{height}</strong>.
+    The average height for all collected data is <strong>{avarage}</strong>.
+    Total of heights get from site is <strong>{count}</strong>!'''
 
     msg = MIMEText(message, 'html')
     msg['Subject'] = subject
@@ -27,4 +30,4 @@ def send_email(email, height):
 
 
 if __name__ == '__main__':
-    send_email('joaozati@gmail.com', '182')
+    send_email('joaozati@gmail.com', '182', '181', '5')
