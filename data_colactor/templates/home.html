@@ -4,19 +4,10 @@
 <h3>Please fill the entries to get population height statistics</h3>
 <form action="{{ url_for('success') }}" method="POST">
     <input
-            title="Your email will be safe with us"
-            placeholder="Enter your email Address"
-            type="email"
-            name="email_name"
-            required> <br>
-    <input
-            title="Your data will be safe with us"
-            placeholder="Enter your height (cm)"
-            type="number"
-            min = "0"
-            max = "300"
-            name="height_name"
-            required> <br>
+            type="file"
+            name="file"
+            enctype="multipart/form-data"
+    > <br>
     <button type="submit">Submit</button>
 </form>
 {% endblock %}
