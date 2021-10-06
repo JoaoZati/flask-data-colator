@@ -42,3 +42,11 @@ html, body {
 .container p {
     margin: 100px;
 }
+
+.alert-warning {
+    background-color: #f9c74f
+}
+
+.alert-success {
+    background-color: #90be6d
+}

@@ -1,0 +1,2 @@
+from_email = (your email without parentheses)
+from_password = (your password without parentheses)

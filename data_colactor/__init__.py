@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from send_email import send_email
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'mNoWF5rUjZPyNNScRAw6sPjmZnP87rAQkuM7WAhbRM'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://joao:af1235512355@localhost:5434/flask'
 db = SQLAlchemy(app)
 
@@ -28,8 +30,20 @@ def success():
     if request.method == 'POST':
         email = request.form['email_name']
         height = request.form["height_name"]
-        print(email, height)
-        print(type(email), type(height))
+
+        data = Data.query.filter_by(email_db=email).first()
+        # data = db.session.query(Data).filter(Data.email_db == email).count() # should return 0
+
+        if data:
+            flash('Email already exists', category='error')
+            return redirect(url_for('home'))
+
+        send_email(email, height)
+        data = Data(email, height)
+        db.session.add(data)
+        db.session.commit()
+        flash("Email successfully sent", category='success') # can pass like a render in text
+
     return render_template('success.html')
 
 
