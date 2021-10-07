@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from send_email import send_email
 from sqlalchemy.sql import func
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mNoWF5rUjZPyNNScRAw6sPjmZnP87rAQkuM7WAhbRM'
@@ -29,26 +30,13 @@ def home():
 @app.route('/success', methods=['GET', 'POST'])
 def success():
     if request.method == 'POST':
-        email = request.form['email_name']
-        height = request.form["height_name"]
-
-        data = Data.query.filter_by(email_db=email).first()
-        # data = db.session.query(Data).filter(Data.email_db == email).count() # should return 0
-
-        if data:
-            flash('Email already exists', category='error')
-            return redirect(url_for('home'))
-
-        data = Data(email, height)
-        db.session.add(data)
-        db.session.commit()
-        avarange_weight = db.session.query(func.avg(Data.height_db)).scalar()
-        avarange_weight = round(avarange_weight, 2)
-        count = db.session.query(Data.height_db).count()
-        send_email(email, height, avarange_weight, count)
-        flash("Email successfully sent", category='success') # can pass like a render in text
-
-    return render_template('success.html')
+        file = request.files['file']
+        file.save(secure_filename(f'uploaded_{file.filename}'))
+        with open(f'uploaded_{file.filename}', 'w') as f:
+            f.writelines('This was add later')
+        print(file)
+        print(type(file))
+        return render_template('success.html')
 
 
 if __name__ == '__main__':
