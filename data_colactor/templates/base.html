@@ -10,6 +10,9 @@
     {% include 'flash.html' %}
     <div class="container">
         {% block body %}{% endblock %}
+        {% if btn %}
+        {% include 'download.html' %}
+        {% endif %}
     </div>
 </div>
 

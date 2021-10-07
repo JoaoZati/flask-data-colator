@@ -31,12 +31,18 @@ def home():
 def success():
     if request.method == 'POST':
         file = request.files['file']
+        if not file:
+            return redirect(url_for('home'))
         file.save(secure_filename(f'uploaded_{file.filename}'))
-        with open(f'uploaded_{file.filename}', 'w') as f:
-            f.writelines('This was add later')
-        print(file)
-        print(type(file))
-        return render_template('success.html')
+        with open(f'uploaded_{file.filename}', 'a') as f:
+            f.write('This was add later')
+        return render_template('home.html', btn=True)
+    return redirect(url_for('home'))
+
+
+@app.route('/download')
+def download():
+    pass
 
 
 if __name__ == '__main__':
