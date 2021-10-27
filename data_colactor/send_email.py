@@ -1,11 +1,12 @@
 import smtplib
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
 
-with open('../config.txt', 'r') as file:
-    content = file.read()
-    list_content = content.split('\n')
-    from_email = list_content[0].replace("from_email = ", '')
-    from_password = list_content[1].replace("from_password = ", '')
+load_dotenv()
+
+from_email = os.getenv("EMAIL")
+from_password = os.getenv("PASSWORD")
 
 
 def send_email(email, height, avarage, count):
