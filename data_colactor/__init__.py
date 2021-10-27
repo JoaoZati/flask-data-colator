@@ -5,7 +5,7 @@ from sqlalchemy.sql import func
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mNoWF5rUjZPyNNScRAw6sPjmZnP87rAQkuM7WAhbRM'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://joao:af1235512355@localhost:5434/flask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://joao:af1235512355@localhost:5434/flaskdatacolector'
 db = SQLAlchemy(app)
 
 
@@ -46,7 +46,7 @@ def success():
         avarange_weight = round(avarange_weight, 2)
         count = db.session.query(Data.height_db).count()
         send_email(email, height, avarange_weight, count)
-        flash("Email successfully sent", category='success') # can pass like a render in text
+        flash("Email successfully sent", category='success')  # can pass like a render in text
 
     return render_template('success.html')
 
