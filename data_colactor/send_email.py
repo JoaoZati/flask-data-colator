@@ -5,8 +5,12 @@ import os
 
 load_dotenv()
 
-from_email = os.getenv("EMAIL")
-from_password = os.getenv("PASSWORD")
+if 'EMAIL' in os.environ:
+    from_email = os.environ["EMAIL"]
+    from_password = os.environ["PASSWORD"]
+else:
+    from_email = os.getenv("EMAIL")
+    from_password = os.getenv("PASSWORD")
 
 
 def send_email(email, height, avarage, count):
