@@ -16,7 +16,7 @@ def create_app():
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
     if 'SECRET_KEY' in os.environ:
-        app.config['SECRET_KEY'] = os.environ["SECRET_KEY"]
+        app.config['SECRET_KEY'] = os.environ["SECRET_KEY"].replace('postgres://', 'postgresql://')
     else:
         app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
